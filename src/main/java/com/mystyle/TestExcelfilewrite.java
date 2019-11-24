@@ -16,11 +16,57 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import com.mystyle.excel.ExportExcelFile;
+
 @Component
 public class TestExcelfilewrite {
 	
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+	@Autowired
+	ExportExcelFile exportExcelFile;
+	
+
+	public String ExcuteExcel() {
+
+		List<Map<String, Object>> ListofRowLines = jdbcTemplate.queryForList(" select "
+				 +"id ,"+
+				 "first_name ,"+
+				 "surname ,"+
+				 "Dob ,"+
+				 "Email ,"+
+				 "Telephone ,"+
+				 "Address ,"+
+				 "Image ,"+
+				 "Gender ,"+
+				 "Address2 ,"+
+				 "Apartment ,"+
+				 "Post_code ,"+
+				 "course_id "+
+			
+				 " from student_information");
+		
+		System.out.println(ListofRowLines);
+		String columns[]= {	"id",
+				 "first_name" ,
+				 "surname",
+				 "Dob ",
+				 "Email",
+				 "Telephone",
+				 "Address",
+				 "Image",
+				 "Gender",
+				 "Address2",
+				 "Apartment",
+				 "Post_code",
+				 "course_id"};
+		
+	//	exportExcelFile.exportExcel();
+		exportExcelFile.exportExcelFile(columns, ListofRowLines);
+		
+		return "excelexute";
+		
+	}
 	
 	public String ExcuteWithParam()
 	

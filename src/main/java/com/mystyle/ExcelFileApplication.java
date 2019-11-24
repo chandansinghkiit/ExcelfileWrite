@@ -19,7 +19,7 @@ public class ExcelFileApplication {
 
 		ConfigurableApplicationContext context = SpringApplication.run(ExcelFileApplication.class, args);
 		externalFlatFileWatchService = context.getBean(TestExcelfilewrite.class);
-		String str=externalFlatFileWatchService.ExcuteWithParam();
+		String str=externalFlatFileWatchService.ExcuteExcel();
 		System.out.println("write program");
 	}
 	
