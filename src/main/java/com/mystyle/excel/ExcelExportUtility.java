@@ -1,12 +1,17 @@
 package com.mystyle.excel;
 
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -38,7 +43,10 @@ public abstract class ExcelExportUtility<E extends Object> {
 	protected CellStyle getHeaderStyle() {
 		CellStyle style = wb.createCellStyle();
 		style.setFillForegroundColor(IndexedColors.ORANGE.getIndex());
-
+		Font font = wb.createFont();
+		font.setColor(IndexedColors.RED.getIndex());
+		style.setFont(font);
+		
 
 		return style;
 	}
@@ -107,23 +115,20 @@ public abstract class ExcelExportUtility<E extends Object> {
 						Object obj = entry.getValue();
 						
 					      Cell cell = row1.createCell(cellnum++);
-			               if(rownum==1)
-			               {
-			            	   cell.setCellStyle(getHeaderStyle());
-			            	    if(key instanceof String) {
-				                    cell.setCellValue((String)key);
-			            	    }else {
-			            	        cell.setCellValue(key);
-			            	    }
-			            	    
-			            	    
-			
-			               }else {
+					    		  
 			            	    if(obj instanceof String)
 				                    cell.setCellValue((String)obj);
 				                else if(obj instanceof Integer)
-				                    cell.setCellValue((Integer)obj); 
-			               }
+				                    cell.setCellValue((Integer)obj);
+				                else if(obj instanceof BigDecimal)
+				                	 cell.setCellValue((RichTextString)obj);
+				                else if(obj instanceof Double)
+				                	 cell.setCellValue((Double)obj);
+				                else if(obj instanceof Date)
+				                	 cell.setCellValue((Date)obj);
+				                else if(obj instanceof Number)
+				                	 cell.setCellValue((double)obj);
+			            
 			           
 			            
 					}
